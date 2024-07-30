@@ -6,7 +6,6 @@ from typing import List
 filename_default = os.path.join(os.path.dirname(__file__), 'message_ids.json')
 async def save_message_ids(message_ids: List[int],
                            filename=filename_default):
-    print('to_save')
     async with aiofiles.open(filename, 'w') as file:
         await file.write(json.dumps(message_ids, indent=2))
 

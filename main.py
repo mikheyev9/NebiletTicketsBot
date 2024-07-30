@@ -21,7 +21,7 @@ from calculate import (calculate_percentage,
 load_dotenv()
 
 DOMAIN = os.getenv('DOMAIN')
-CHECK_INTERVAL = 20
+CHECK_INTERVAL = 800
 BASE_URL = f"http://{DOMAIN}/react_api/v1/check_ticket_availability"
 EventResult = namedtuple('EventResult', ['site_name', 'total_events_count',
                                          'events_with_tickets_count', 'events_without_tickets_count'])

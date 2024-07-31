@@ -50,17 +50,21 @@ async def scheduled_check():
                     average_previous_percentage = calculate_average_percentage(previous_results)
                     percentage_drop = calculate_percentage_drop(average_previous_percentage, percentage_with_tickets)
                     if (percentage_drop > 10 and
-                            percentage_with_tickets == 0 and
+                            percentage_with_tickets < 9 and
                             were_tickets_available(previous_results[:1])):
                         message = message_for_tg.add_warning(site_info.site_name,
                                                              percentage_drop,
+                                                             average_previous_percentage,
+                                                             percentage_with_tickets,
                                                              need_return=True)
                         await telegram_bot.add_to_queue(
                             SendTask(type='send', message=message, chat_id=telegram_bot.CHANNEL_WARNING)
                         )
                     if percentage_with_tickets > 0 and not were_tickets_available(previous_results[:1]):
+                        initial_percentage = calculate_average_percentage(previous_results[:1])
                         message = message_for_tg.add_available_ticket(site_info.site_name,
                                                                       percentage_with_tickets,
+                                                                      initial_percentage,
                                                                       need_return=True)
                         await telegram_bot.add_to_queue(
                             SendTask(type='send', message=message, chat_id=telegram_bot.CHANNEL_WARNING)
